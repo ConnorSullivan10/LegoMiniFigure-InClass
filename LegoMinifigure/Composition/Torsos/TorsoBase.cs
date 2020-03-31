@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using LegoMinifigure.Composition.Heads;
 
 namespace LegoMinifigure.Composition.Torsos
 {
     //abstract modifies the class keyword so that you can't create another instance
-    abstract class TorsoBase
+    abstract class TorsoBase : IColorful
     {
         public abstract bool ChiseledAbs { get; set; }
         public bool Shirted { get; set; }
@@ -18,5 +19,7 @@ namespace LegoMinifigure.Composition.Torsos
         {
             Console.WriteLine("Inhale, Exhale...");
         }
+
+        public LegoColor Color => LegoColor.Yellow;
     }
 }

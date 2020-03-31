@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using LegoMinifigure.Composition.Heads;
 using LegoMinifigure.Composition.Legs;
 using LegoMinifigure.Composition.Torsos;
+
 namespace LegoMinifigure
 {
     class Program
@@ -22,13 +24,6 @@ namespace LegoMinifigure
                 Shoes = ShoeType.FlipFlops
             };
 
-            var atorso = new AstronautTorso
-            {
-                HandType = HandType.Baby,
-                ChiseledAbs = true,
-                Shirted = true
-            };
-
             var dtorso = new DadBodTorso
             {
                 HandType = HandType.Baby,
@@ -36,8 +31,22 @@ namespace LegoMinifigure
                 Shirted = true
             };
 
+            var atorso = new AstronautTorso()
+            {
+                HandType = HandType.Baby,
+                ChiseledAbs = true,
+                Shirted = true
+            };
+
+
+            atorso.Breathe();
+            dtorso.Breathe();
+            atorso.HandType = HandType.Baby;
+            dtorso.ChiseledAbs = false;
+
             var astronaut = new Astronaut("Space Person", "Janitor", head, atorso, legs);
-            var astronaut2 = new Astronaut("Space Lady", "Janitor", head, dtorso, legs);
+            // var astronaut2 = new Astronaut("Space Lady", "Janitor", head, dtorso, legs);
+
             astronaut.DoYourJob(100);
 
             var casper = new Ghost("Casper", DateTime.Today)
@@ -59,6 +68,35 @@ namespace LegoMinifigure
             fatso.Spook();
             fatso.Haunt("Whipstaff Manor");
             fatso.Spook();
+
+            var torsos = new List<TorsoBase> { dtorso, atorso, new DadBodTorso() };
+
+            foreach (var torso in torsos)
+            {
+                torso.Breathe();
+                torso.Flex();
+
+                switch (torso)
+                {
+                    case DadBodTorso dbod:
+                        dbod.ChangeTemperature("Hot");
+                        break;
+                }
+            }
+
+            var colorfulThings = new List<IColorful> { dtorso, atorso, new BabyLegs() };
+
+            foreach (var colorfulThing in colorfulThings)
+            {
+                Console.WriteLine(colorfulThing.Color);
+
+                switch (colorfulThing)
+                {
+                    case IMoveable mover:
+                        mover.Move(5);
+                        break;
+                }
+            }
         }
     }
 }
